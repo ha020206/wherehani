@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스포츠행사 통합제공플랫폼 : 어디서하니</title>
+    <style>
+        /* 노션 스타일 디자인 */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+            background-color: transparent;
+            color: #37352f;
+            margin: 0;
+            padding: 20px;
+            user-select: none;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #37352f;
+            line-height: 1.4;
+            background-color: #F7F7F5;
+            text-align: center;
+            padding: 24px 10px;
+            border-radius: 12px;
+            margin: 0 0 20px 0;
+            word-break: keep-all;
+        }
+
+        .intro-box {
+            font-size: 13px;        
+            color: #6b6b6b;         
+            line-height: 1.6;       
+            text-align: left;
+            margin-bottom: 30px;    
+            word-break: keep-all;   
+            padding: 0 4px;
+        }
+
+        .intro-box strong {
+            color: #37352f;
+            font-weight: 600;
+        }
+
+        .step-container {
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        /* 기본 버튼 스타일 */
+        .step-item {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 1px solid #e1e1e0;
+            border-radius: 12px; /* 둥글기 조금 더 부드럽게 */
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            position: relative; /* 애니메이션 배치를 위해 */
+        }
+
+        .step-item:hover {
+            background: #f7f7f5;
+        }
+
+        /* [수정됨] 활성화된 단계 (애니메이션 적용) */
+        .active-step .step-item {
+            border: 2px solid #2eaadc; /* 강조 색상 (파란 계열) */
+            background-color: #fff;
+            animation: pulse 1.5s infinite ease-in-out; /* 두근거리는 애니메이션 */
+            box-shadow: 0 4px 15px rgba(46, 170, 220, 0.2);
+            z-index: 10;
+        }
+
+        /* 두근두근 애니메이션 키프레임 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); } /* 1.03배 커짐 */
+            100% { transform: scale(1); }
+        }
+
+        .icon-box {
+            width: 24px;
+            height: 24px;
+            margin-right: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+
+        .text-box {
+            flex: 1;
+        }
+
+        .title {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .desc {
+            font-size: 13px;
+            color: #787774;
+        }
+
+        /* 완료된 상태 스타일 */
+        .checked {
+            background-color: #f0fdf4 !important;
+            border-color: #bbf7d0 !important;
+            animation: none !important; /* 완료되면 애니메이션 멈춤 */
+            transform: scale(1) !important;
+        }
+        
+        .checked .icon-box {
+            transform: scale(1.2);
+        }
+
+        .checked .icon-box::after {
+            content: "✅";
+        }
+        
+        .unchecked .icon-box::after {
+            content: "⬜";
+        }
+        
+        /* [수정됨] 완료된 텍스트 흐리게 처리 (선택사항) */
+        .checked .text-box {
+            opacity: 0.6;
+            text-decoration: line-through; /* 취소선 추가 */
+        }
+
+        #completion-msg {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            color: #1565c0;
+            font-weight: bold;
+            animation: slideUp 0.5s forwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>스포츠행사 통합 제공 플랫폼 : 어디서하니</h1>
+
+    <div class="intro-box">
+        안녕하세요. 강원대학교 챌린지러너 <strong>Shift + Delete</strong> 팀의 AI소프트웨어학과 안유리, 이규현, 임형근, 하승연 입니다.
+        <br>
+        저희 웹 서비스의 이용 전·후 효과 검증을 위해 설문조사를 진행하고자 합니다.
+        <br> 
+    </div>
+
+    <div id="step1-wrapper" class="step-container active-step">
+        <a href="https://naver.me/FjC5zNgx" target="_blank" class="step-item unchecked" id="step1-btn" onclick="completeStep(1)">
+            <div class="icon-box"></div>
+            <div class="text-box">
+                <div class="title">Step 1. 설문조사 1 실시</div>
+                <div class="desc">클릭하여 설문에 참여해주세요 !</div>
+            </div>
+        </a>
+    </div>
+
+    <div id="step2-wrapper" class="step-container">
+        <a href="https://wherehani.com" target="_blank" class="step-item unchecked" id="step2-btn" onclick="completeStep(2)">
+            <div class="icon-box"></div>
+            <div class="text-box">
+                <div class="title">Step 2. 웹사이트 방문</div>
+                <div class="desc">"어디서 하니" wherehani.com 둘러보기 !</div>
+            </div>
+        </a>
+    </div>
+
+    <div id="step3-wrapper" class="step-container">
+        <a href="https://naver.me/xZjReOAd" target="_blank" class="step-item unchecked" id="step3-btn" onclick="completeStep(3)">
+            <div class="icon-box"></div>
+            <div class="text-box">
+                <div class="title">Step 3. 설문조사 2 실시</div>
+                <div class="desc">클릭하여 마지막 설문에 참여해주세요 !</div>
+            </div>
+        </a>
+    </div>
+
+    <div id="completion-msg">
+        🎉 모든 과정이 완료되었습니다!<br>참여해주셔서 감사합니다 🙂
+    </div>
+
+    <script>
+        function completeStep(stepNum) {
+            const btn = document.getElementById(`step${stepNum}-btn`);
+            const currentWrapper = document.getElementById(`step${stepNum}-wrapper`);
+            
+            // 이미 완료된 버튼이면 반응 없음
+            if(btn.classList.contains('checked')) return;
+
+            // 클릭 시 체크 상태로 변경 및 애니메이션 중단
+            btn.classList.remove('unchecked');
+            btn.classList.add('checked');
+            currentWrapper.classList.remove('active-step');
+
+            setTimeout(() => {
+                if (stepNum === 1) {
+                    const next = document.getElementById('step2-wrapper');
+                    // 다음 단계에 애니메이션 부여
+                    next.classList.add('active-step');
+                    
+                } else if (stepNum === 2) {
+                    const next = document.getElementById('step3-wrapper');
+                    // 다음 단계에 애니메이션 부여
+                    next.classList.add('active-step');
+                    
+                } else if (stepNum === 3) {
+                    document.getElementById('completion-msg').style.display = 'block';
+                }
+            }, 500); // 0.5초 뒤 다음 단계 강조
+        }
+    </script>
+</body>
+</html>
